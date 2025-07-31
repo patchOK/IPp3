@@ -69,7 +69,6 @@ def cancel_futures(future_to_ip):
             f.cancel()
 
 def validate_ip(ip_str):
-    """Validates if a string is a valid IP address"""
     try:
         ipaddress.IPv4Address(ip_str)
         return True
@@ -155,7 +154,7 @@ def display_results_columns(online, offline):
     online.sort(key=sort_ip_key)
     offline.sort(key=sort_ip_key)
     
-    print(f"{'ONLINE':<15} | {'OFFLINE':<15}")
+    print(f"{'OK':<15} | {'NO':<15}")
     print("-" * 35)
     
     for ok_ip, no_ip in zip_longest(online, offline, fillvalue=""):
@@ -190,7 +189,7 @@ def run_monitor(ip_list):
                         try:
                             ip = future_to_ip[future]
                             is_online = future.result()
-                            statuses[ip] = "ONLINE" if is_online else "OFFLINE"
+                            statuses[ip] = "OK" if is_online else "NO"
                         except Exception as e:
                             if not interrupted:
                                 statuses[future_to_ip[future]] = f"ERROR: {str(e)[:20]}"
