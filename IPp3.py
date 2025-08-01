@@ -145,7 +145,9 @@ def run_range_scan(start_ip, end_ip):
     if not interrupted:        
         print("\n\n~ Scan completed.\n")
 
-    display_results_columns(online_ips, offline_ips)
+    display_results_columns(online_ips, offline_ips)    
+    print(f"\nOK: {len(online_ips)}")
+    print(f"NO: {len(offline_ips)}")
 
 def display_results_columns(online, offline):
     if interrupted:
@@ -178,7 +180,7 @@ def run_monitor(ip_list):
             statuses = {}
             
             try:
-                with concurrent.futures.ThreadPoolExecutor(max_workers=min(len(ip_list), 20)) as executor:
+                with concurrent.futures.ThreadPoolExecutor(max_workers=min(len(ip_list), 50)) as executor:
                     future_to_ip = {executor.submit(ping_host, ip): ip for ip in ip_list}
                     
                     for future in concurrent.futures.as_completed(future_to_ip):
@@ -192,7 +194,7 @@ def run_monitor(ip_list):
                             statuses[ip] = "OK" if is_online else "NO"
                         except Exception as e:
                             if not interrupted:
-                                statuses[future_to_ip[future]] = f"ERROR: {str(e)[:20]}"
+                                statuses[future_to_ip[future]] = f"ERROR: {str(e)[:50]}"
             except KeyboardInterrupt:
                 interrupted = True
                 break
