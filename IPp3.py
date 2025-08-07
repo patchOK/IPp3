@@ -26,7 +26,6 @@ def signal_handler(signum, frame):
     print("\n~ Exiting...")
 
 def get_ping_command(ip, count=4):
-    """Generate ping command based on OS"""
     system = platform.system().lower()
     if system == "windows":
         return ["ping", "-n", str(count), "-w", "2000", ip]
@@ -325,7 +324,6 @@ def run_monitor(ip_list):
         interrupted = True
 
 def get_color_for_packet_loss(packet_loss):
-    """Get color based on packet loss percentage"""
     if "%" in str(packet_loss):
         try:
             loss_value = float(packet_loss.replace("%", ""))
@@ -340,13 +338,11 @@ def get_color_for_packet_loss(packet_loss):
     return f"{Colors.RED}{packet_loss}{Colors.RESET}"
 
 def get_color_for_mac(mac_address):
-    """Get color for MAC address display"""
     if mac_address not in ["Unknown", "Error", "N/A", "Remote"]:
         return f"{Colors.CYAN}{mac_address}{Colors.RESET}"
     return f"{Colors.YELLOW}{mac_address}{Colors.RESET}"
 
 def get_color_for_ports(ports):
-    """Get color for ports display"""
     if ports and ports not in ["N/A", "None", "Error"]:
         return f"{Colors.GREEN}{ports[:13]}{Colors.RESET}"
     return f"{Colors.YELLOW}{ports}{Colors.RESET}"
