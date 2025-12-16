@@ -106,7 +106,8 @@ The detailed monitor displays:
 The tool uses multithreading (up to 80 concurrent threads for range scanning, 30 for detailed monitoring) to ensure efficient and fast network analysis while maintaining system stability.
 
 ## Interrupting Operations
-You can press **Ctrl+C** at any time to gracefully exit the current operation and return to the main menu or exit the program.
+You can press **Ctrl+C** at any time to exit the current operation and exit the program.
+You can press **Ctrl+D** at any time to exit the current operation and return to the main menu. 
 
 ## Notes
 - The OS detection feature provides approximate identification based on TTL values
