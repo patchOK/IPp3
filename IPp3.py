@@ -35,18 +35,16 @@ def keyboard_listener():
     system = platform.system().lower()
     
     if system == "windows":
-        # Su Windows usiamo msvcrt
         import msvcrt
         while not interrupted and not return_to_menu:
             if msvcrt.kbhit():
                 key = msvcrt.getch()
-                if key == b'\x04':  # Ctrl+D
+                if key == b'\x04':
                     return_to_menu = True
                     print("\n~ Returning to menu...")
                     break
             time.sleep(0.1)
     else:
-        # Su Linux/Mac usiamo termios e select
         import termios
         import tty
         
@@ -56,7 +54,7 @@ def keyboard_listener():
             while not interrupted and not return_to_menu:
                 if select.select([sys.stdin], [], [], 0.1)[0]:
                     char = sys.stdin.read(1)
-                    if char == '\x04':  # Ctrl+D
+                    if char == '\x04':
                         return_to_menu = True
                         print("\n~ Returning to menu...")
                         break
@@ -261,7 +259,6 @@ def run_range_scan(start_ip, end_ip):
     print(f"\n~ Starting scan of {total_ips} IP addresses from {start_ip} to {end_ip}...")
     print("~ Ctrl+C to exit | Ctrl+D to return to menu\n")
     
-    # Avvia il thread per ascoltare Ctrl+D
     listener_thread = threading.Thread(target=keyboard_listener, daemon=True)
     listener_thread.start()
     
@@ -335,7 +332,6 @@ def run_monitor(ip_list):
     print(f"\n~ Starting monitoring of {len(parsed_ips)} IP addresses...")
     print("~ Ctrl+C to exit | Ctrl+D to return to menu\n")
     
-    # Avvia il thread per ascoltare Ctrl+D
     listener_thread = threading.Thread(target=keyboard_listener, daemon=True)
     listener_thread.start()
     
@@ -429,7 +425,6 @@ def run_monitor_plus(ip_list):
     print(f"\n~ Starting detailed monitoring of {len(parsed_ips)} IP addresses...")
     print("~ Ctrl+C to exit | Ctrl+D to return to menu\n")
     
-    # Avvia il thread per ascoltare Ctrl+D
     listener_thread = threading.Thread(target=keyboard_listener, daemon=True)
     listener_thread.start()
     
